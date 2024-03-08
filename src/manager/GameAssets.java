@@ -7,7 +7,6 @@ import entity.Entity;
 import resources.ImageManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +27,10 @@ public class GameAssets {
         for (Card c : cards) {
             c.setImage(imageManager.getImage(c.getCardType()));
         }
+    }
+
+    public List<Entity> getEntities() {
+        return cards.stream().map(e -> (Entity) e).collect(Collectors.toList());
     }
 
     public List<Drawable> getDrawableEntities() {

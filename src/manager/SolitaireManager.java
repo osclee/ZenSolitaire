@@ -3,18 +3,13 @@ package manager;
 import entity.Card;
 import entity.Drawable;
 import entity.LoadMessage;
-import graphics.SolitaireFrame;
-import graphics.SolitairePanel;
+import entity.MoveEntity;
 import graphics.SolitaireFrame;
 import graphics.SolitairePanel;
 import resources.ImageManager;
 
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.awt.event.*;
 import java.util.List;
 
 public class SolitaireManager {
@@ -26,6 +21,8 @@ public class SolitaireManager {
     private GameAssets assets;
     private ImageManager imageManager;
 
+    private MoveEntity moveEntity;
+
     private String defaultPath = "/default";
 
     public SolitaireManager(int mode) {
@@ -33,6 +30,7 @@ public class SolitaireManager {
         buildFrame();
         displayLoad();
         buildAssets();
+        addCardDragAndDrop();
 
         if (mode == 0) {
            drawInitialBoard();
@@ -73,6 +71,10 @@ public class SolitaireManager {
         }
     }
 
+    private void addCardDragAndDrop() {
+        moveEntity = new MoveEntity(assets.getEntities(), panel);
+    }
+
     private void displayAllCards() {
         int x = 0;
         int y = 0;
@@ -90,6 +92,8 @@ public class SolitaireManager {
 
         for (Card card : assets.getCards()) {
             card.setP0(new Point(x, y));
+            card.setP1(new Point(x + width, y));
+            card.setP2(new Point(x, y + width));
             card.setP3(new Point(x + width, y + height));
 
             x += spacing + width;
